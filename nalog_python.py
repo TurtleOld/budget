@@ -23,7 +23,7 @@ class NalogRuPython:
     HOST = 'irkkt-mobile.nalog.ru:8888'
     DEVICE_OS = 'Android'
     CLIENT_VERSION = '2.9.0'
-    DEVICE_ID = '974A34887DBA6A1B3F4FC5F3C2678A'
+    DEVICE_ID = '974A34887DBA6A1B'
     ACCEPT = '*/*'
     USER_AGENT = 'billchecker/2.9.0 (iPhone; iOS 13.6; Scale/2.00)'
     ACCEPT_LANGUAGE = 'ru-RU;q=1, en-US;q=0.9'
