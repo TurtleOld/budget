@@ -11,6 +11,8 @@ for item in ticket()["ticket"]["document"]["receipt"]["items"]:
           f"Количество: {item['quantity']}, Сумма: {get_result_price(item['sum'])}")
 totalSum = ticket()["ticket"]["document"]["receipt"]["totalSum"]
 print(f"Итог по чеку: {get_result_price(totalSum)}")
+company = ticket()["ticket"]["document"]["receipt"]["user"]
+print(f"Компания: {company}")
 
 
 ticket()
