@@ -2,7 +2,7 @@ import datetime
 
 
 def convert_date(date_time):
-    return datetime.datetime.fromtimestamp(date_time).strftime("%d.%m.%Y")
+    return datetime.datetime.fromtimestamp(date_time).strftime("%Y.%m.%d")
 
 
 def convert_time(date_time):
