@@ -43,7 +43,7 @@ async def get_receipt(message: types.Message):
             amount = str(get_result_price(item["sum"]))
 
             cursor.execute(
-                "INSERT INTO receipt(date_receipt, time_receipt, name_seller, name_product, price, quantity, amount, total_sum) VALUES ('" + converting_date + "', '" + converting_time + "', '" + seller + "', '" + name_product + "', '" + price + "', '" + quantity + "', '" + amount + "', '" + totalSum + "')")
+                "INSERT INTO receipt(date_receipt, time_receipt, name_seller, name_product, price, quantity, amount , total_sum) VALUES ('" + converting_date + "', '" + converting_time + "', '" + seller + "', '" + name_product + "', '" + price + "', '" + quantity + "', '" + amount + "', '" + totalSum + "')")
         list_file_name = f"./receipt/{file_info.file_path[:10]}"
         for path in os.listdir(list_file_name):
             os.remove(f"./receipt/documents/{path}")
