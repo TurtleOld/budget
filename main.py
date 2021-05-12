@@ -1,4 +1,4 @@
-from settings import *
+from settings import get_result_price, convert_date, convert_time
 import asyncio
 import json
 from aiogram import Bot, Dispatcher, executor, types
