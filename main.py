@@ -1,3 +1,5 @@
+import time
+
 from settings import get_result_price, convert_date, convert_time
 import asyncio
 import json
@@ -23,12 +25,11 @@ async def send_to_admin(dp):
 async def get_receipt(message: types.Message):
     file_info = await bot.get_file(message.document.file_id)
     file = await file_info.download("E:\MyProject\\budget\\receipt")
-    print(file)
+
     file_name = file_info.file_path[10:]
-    print(file_name)
-    with open(f"receipt/documents/{file_name}", 'r', encoding="utf-8") as file_read:
+
+    with open(f"receipt/documents/{file_name}", 'r', encoding="utf-8", closefd=True) as file_read:
         files = json.load(file_read)
-        print(files)
 
         date_time = files["dateTime"]
         converting_date = convert_date(date_time)
