@@ -24,11 +24,10 @@ async def send_to_admin(dp):
 @dp.message_handler(content_types=['document'])
 async def get_receipt(message: types.Message):
     file_info = await bot.get_file(message.document.file_id)
-    file = await file_info.download("E:\MyProject\\budget\\receipt")
+    file = await file_info.download("receipt")
 
-    file_name = file_info.file_path[10:]
 
-    with open(f"receipt/documents/{file_name}", 'r', encoding="utf-8", closefd=True) as file_read:
+    with open(f"{file.name}", 'r', encoding="utf-8", closefd=True) as file_read:
         files = json.load(file_read)
 
         date_time = files["dateTime"]
@@ -45,9 +44,14 @@ async def get_receipt(message: types.Message):
 
             cursor.execute(
                 "INSERT INTO receipt(date_receipt, time_receipt, name_seller, name_product, price, quantity, amount , total_sum) VALUES ('" + converting_date + "', '" + converting_time + "', '" + seller + "', '" + name_product + "', '" + price + "', '" + quantity + "', '" + amount + "', '" + totalSum + "')")
-        list_file_name = f"./receipt/{file_info.file_path[:10]}"
-        for path in os.listdir(list_file_name):
-            os.remove(f"./receipt/documents/{path}")
+
+        if not file_read.closed:
+            file_read.close()
+    path_to_file = "receipt/documents/"
+    files = os.listdir(path_to_file)
+    for file_r in files:
+        os.remove(path_to_file + file_r)
+
 
 
 if __name__ == "__main__":
