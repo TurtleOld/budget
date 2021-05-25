@@ -24,8 +24,9 @@ async def send_to_admin(dp):
 @dp.message_handler(content_types=['document'])
 async def get_receipt(message: types.Message):
     file_info = await bot.get_file(message.document.file_id)
+    if file_info.file_id:
+        await message.answer("Спасибо, файл добавлен в базу данных!")
     file = await file_info.download("receipt")
-
 
     with open(f"{file.name}", 'r', encoding="utf-8", closefd=True) as file_read:
         files = json.load(file_read)
@@ -51,7 +52,6 @@ async def get_receipt(message: types.Message):
     files = os.listdir(path_to_file)
     for file_r in files:
         os.remove(path_to_file + file_r)
-
 
 
 if __name__ == "__main__":
