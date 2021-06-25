@@ -24,7 +24,7 @@ async def send_to_admin(dp):
 @dp.message_handler(content_types=['document'])
 async def get_receipt(message: types.Message):
     file_info = await bot.get_file(message.document.file_id)
-    if file_info.file_id:
+    if file_info.file_path[-4:] == "json":
         await message.answer("Спасибо, файл добавлен в базу данных!")
     file = await file_info.download("receipt")
 
@@ -44,10 +44,7 @@ async def get_receipt(message: types.Message):
             amount = str(get_result_price(item["sum"]))
 
             cursor.execute(
-                "INSERT INTO receipt(date_receipt, time_receipt, name_seller, name_product, price, quantity, amount , total_sum) VALUES ('" + converting_date + "', '" + converting_time + "', '" + seller + "', '" + name_product + "', '" + price + "', '" + quantity + "', '" + amount + "', '" + totalSum + "')")
-
-        if not file_read.closed:
-            file_read.close()
+                "INSERT INTO receipt(date_receipt, time_receipt, name_seller, product_information , total_sum) VALUES (%s, %s, %s, %s, %s)", (converting_date, converting_time, seller, [name_product, price, quantity, amount], totalSum,))
     path_to_file = "receipt/documents/"
     files = os.listdir(path_to_file)
     for file_r in files:
