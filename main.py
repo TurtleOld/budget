@@ -36,15 +36,17 @@ async def get_receipt(message: types.Message):
         converting_time = f'{convert_time(date_time)}'
         seller = files['user']
         totalSum = str(get_result_price(files["totalSum"]))
+        information_products = []
 
         for item in files["items"]:
             name_product = item["name"]
             price = str(get_result_price(item["price"]))
             quantity = str(item["quantity"])
             amount = str(get_result_price(item["sum"]))
-
-            cursor.execute(
-                "INSERT INTO receipt(date_receipt, time_receipt, name_seller, product_information , total_sum) VALUES (%s, %s, %s, %s, %s)", (converting_date, converting_time, seller, [name_product, price, quantity, amount], totalSum,))
+            listing = [name_product, price, quantity, amount]
+            information_products.append(listing)
+        cursor.execute(
+            "INSERT INTO receipt(date_receipt, time_receipt, name_seller, product_information , total_sum) VALUES (%s, %s, %s, %s, %s)", (converting_date, converting_time, seller, [information_products], totalSum,))
     path_to_file = "receipt/documents/"
     files = os.listdir(path_to_file)
     for file_r in files:
