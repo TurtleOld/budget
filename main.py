@@ -43,8 +43,8 @@ async def get_receipt(message: types.Message):
             price = str(get_result_price(item["price"]))
             quantity = str(item["quantity"])
             amount = str(get_result_price(item["sum"]))
-            listing = [name_product, price, quantity, amount]
-            information_products.append(listing)
+            list_product_information = [name_product, price, quantity, amount]
+            information_products.append(list_product_information)
         cursor.execute(
             "INSERT INTO receipt(date_receipt, time_receipt, name_seller, product_information , total_sum) VALUES (%s, %s, %s, %s, %s)", (converting_date, converting_time, seller, [information_products], totalSum,))
     path_to_file = "receipt/documents/"
