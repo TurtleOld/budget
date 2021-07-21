@@ -26,31 +26,31 @@ async def get_receipt(message: types.Message):
     file_info = await bot.get_file(message.document.file_id)
     if file_info.file_path[-4:] == "json":
         await message.answer("Спасибо, файл добавлен в базу данных!")
-    file = await file_info.download("receipt")
+        file = await file_info.download("receipt")
 
-    with open(f"{file.name}", 'r', encoding="utf-8", closefd=True) as file_read:
-        files = json.load(file_read)
+        with open(f"{file.name}", 'r', encoding="utf-8", closefd=True) as file_read:
+            files = json.load(file_read)
 
-        date_time = files["dateTime"]
-        converting_date = convert_date(date_time)
-        converting_time = f'{convert_time(date_time)}'
-        seller = files['user']
-        totalSum = str(get_result_price(files["totalSum"]))
-        information_products = []
+            date_time = files["dateTime"]
+            converting_date = convert_date(date_time)
+            converting_time = f'{convert_time(date_time)}'
+            seller = files['user']
+            totalSum = str(get_result_price(files["totalSum"]))
+            information_products = []
 
-        for item in files["items"]:
-            name_product = item["name"]
-            price = str(get_result_price(item["price"]))
-            quantity = str(item["quantity"])
-            amount = str(get_result_price(item["sum"]))
-            list_product_information = [name_product, price, quantity, amount]
-            information_products.append(list_product_information)
-        cursor.execute(
-            "INSERT INTO receipt(date_receipt, time_receipt, name_seller, product_information , total_sum) VALUES (%s, %s, %s, %s, %s)", (converting_date, converting_time, seller, [information_products], totalSum,))
-    path_to_file = "receipt/documents/"
-    files = os.listdir(path_to_file)
-    for file_r in files:
-        os.remove(path_to_file + file_r)
+            for item in files["items"]:
+                name_product = item["name"]
+                price = str(get_result_price(item["price"]))
+                quantity = str(item["quantity"])
+                amount = str(get_result_price(item["sum"]))
+                list_product_information = [name_product, price, quantity, amount]
+                information_products.append(list_product_information)
+            cursor.execute(
+                "INSERT INTO receipt(date_receipt, time_receipt, name_seller, product_information , total_sum) VALUES (%s, %s, %s, %s, %s)", (converting_date, converting_time, seller, [information_products], totalSum,))
+        path_to_file = "receipt/documents/"
+        files = os.listdir(path_to_file)
+        for file_r in files:
+            os.remove(path_to_file + file_r)
 
 
 if __name__ == "__main__":
